@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "name": "sewing_information (Flutter)",
+            "program": "lib/main.dart",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug"
+        }
+    ]
+}

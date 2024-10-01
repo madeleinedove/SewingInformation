@@ -1,0 +1,51 @@
+{
+    "patterns": [
+        {
+            "name": "Pattern 1",
+            "description": "Description 1",
+            "tags": [
+                "tag1",
+                "tag2"
+            ],
+            "manufactor": "burda"
+        },
+        {
+            "name": "Pattern 2",
+            "description": "Description 2",
+            "tags": [
+                "tag2",
+                "tag3"
+            ],
+            "manufactor": "vogue"
+        },
+        {
+            "name": "Pattern 3",
+            "description": "Description 3",
+            "tags": [
+                "tag3",
+                "tag4"
+            ],
+            "manufactor": "simplicity"
+        }
+    ],
+    "fabrics": [
+        {
+            "name": "Fabric 1",
+            "description": "Description 1",
+            "tags": [
+                "tag1",
+                "tag2"
+            ],
+            "url": "https://luxuryknit.com/wp-content/uploads/2019/03/wholesale-cotton-fabric.jpg"
+        },
+        {
+            "name": "Fabric 2",
+            "description": "Description 2",
+            "tags": [
+                "tag2",
+                "tag3"
+            ],
+            "url": "https://cdn.shopify.com/s/files/1/0669/1684/3771/files/The-Various-Types-of-Fabrics-and-How-to-Clean-Them.jpg"
+        }
+    ]
+}

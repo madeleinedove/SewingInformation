@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1091410814765",
+    "firebase_url": "https://flutter-mmd-default-rtdb.firebaseio.com",
+    "project_id": "flutter-mmd",
+    "storage_bucket": "flutter-mmd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091410814765:android:1b570fe98525f5414595a4",
+        "android_client_info": {
+          "package_name": "com.example.sewing_information"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx2cA-bi4qQRKaBRCI8fVN5J9fjd9biQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
