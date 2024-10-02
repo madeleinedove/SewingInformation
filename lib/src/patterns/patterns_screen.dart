@@ -1,10 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:sewing_information/models/Pattern.dart';
+import 'package:sewing_information/service/patterns_api_service.dart';
 import 'package:sewing_information/src/patterns/add_new_pattern.dart';
 //import 'dart:developer' as developer;
 
-class PatternsScreen extends StatelessWidget {
-  const PatternsScreen({super.key, required this.patterns});
-  final List patterns;
+class PatternsScreen extends StatefulWidget {
+  const PatternsScreen({super.key, required this.databaseApiService});
+  final DatabaseApiService databaseApiService;
+
+  @override
+  State<PatternsScreen> createState() => _PatternScreenState();
+}
+
+class _PatternScreenState extends State<PatternsScreen> {
+  List<Pattern> _patterns = [];
+  bool _isLoading = true;
+
+  void _fetchPatterns() async {
+    final patterns = await DatabaseApiService.getPatterns();
+    setState(() {
+      _patterns = List<Pattern>.from(patterns);
+      _isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Deteremine if this is the best place to fetch patterns or if it needs to be in build
+    _fetchPatterns();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +55,7 @@ class PatternsScreen extends StatelessWidget {
             })
           ]),
       drawer: const Drawer(child: Text("Filter")),
-      body: patternCard(),
+      body: _isLoading ? CircularProgressIndicator() : patternCard(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
@@ -47,12 +72,12 @@ class PatternsScreen extends StatelessWidget {
 
   ListView patternCard() {
     return ListView.separated(
-      itemCount: patterns.length,
+      itemCount: _patterns.length,
       separatorBuilder: (BuildContext context, int index) =>
           const Divider(height: 1),
       itemBuilder: (context, index) => ListTile(
-          title: Text(patterns[index].name),
-          subtitle: Text(patterns[index].description)),
+          title: Text(_patterns[index].name),
+          subtitle: Text(_patterns[index].description ?? "")),
     );
   }
 }

@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-sewinginformation-dev-56cb2-authRole",
+      "UnauthRoleArn": "arn:aws:iam::149536487249:role/amplify-sewinginformation-dev-56cb2-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::149536487249:role/amplify-sewinginformation-dev-56cb2-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-sewinginformation-dev-56cb2-deployment",
+      "UnauthRoleName": "amplify-sewinginformation-dev-56cb2-unauthRole",
+      "StackName": "amplify-sewinginformation-dev-56cb2",
+      "StackId": "arn:aws:cloudformation:us-east-1:149536487249:stack/amplify-sewinginformation-dev-56cb2/1ad6dc20-8037-11ef-b5d6-0affd1004d3b",
+      "AmplifyAppId": "d3jvr8o3orygl7"
+    },
+    "categories": {
+      "api": {
+        "sewinginformation": {}
+      }
+    }
+  }
+}

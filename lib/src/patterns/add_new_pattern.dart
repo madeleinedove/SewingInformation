@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sewing_information/src/patterns/pattern.dart';
-import 'package:firebase_database/firebase_database.dart';
 //import 'dart:developer' as developer;
 
 class AddNewPatternScreen extends StatefulWidget {
@@ -15,23 +14,21 @@ class _AddNewPatternScreenState extends State<AddNewPatternScreen> {
   String _patternName = "";
   String _patternDescription = "";
 
-  DatabaseReference ref = FirebaseDatabase.instance.ref("patterns");
-
   final _formKey = GlobalKey<FormState>();
 
   void addNewPattern() {
-    _formKey.currentState!.save();
-    final newPostKey = ref.push().key;
+    // _formKey.currentState!.save();
+    // final newPostKey = ref.push().key;
 
-    final Map<String, Map> updates = {};
-    updates['$newPostKey'] = {
-      'name': _patternName,
-      'description': _patternDescription,
-      'manufactor': _selectedManufactor!.name,
-      'tags': {"tag1", "tag2"}
-    };
+    // final Map<String, Map> updates = {};
+    // updates['$newPostKey'] = {
+    //   'name': _patternName,
+    //   'description': _patternDescription,
+    //   'manufactor': _selectedManufactor!.name,
+    //   'tags': {"tag1", "tag2"}
+    // };
 
-    ref.update(updates);
+    // ref.update(updates);
   }
 
   @override

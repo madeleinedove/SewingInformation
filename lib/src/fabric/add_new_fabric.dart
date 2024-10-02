@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:developer' as developer;
@@ -22,9 +20,6 @@ class _AddNewFabricScreenState extends State<AddNewFabricScreen> {
   final _formKey = GlobalKey<FormState>();
   final picker = ImagePicker();
   File? _image;
-
-  final storageRef = FirebaseStorage.instance.ref();
-  DatabaseReference databaseRef = FirebaseDatabase.instance.ref("fabrics");
 
   //Image Picker function to get image from gallery
   Future getImageFromGallery() async {
@@ -76,26 +71,26 @@ class _AddNewFabricScreenState extends State<AddNewFabricScreen> {
   }
 
   Future<void> addNewFabric() async {
-    _formKey.currentState!.save();
-    final newPostKey = databaseRef.push().key;
+    // _formKey.currentState!.save();
+    // final newPostKey = databaseRef.push().key;
 
-    String formattedDate = DateFormat('yyyyMMddkkmm').format(DateTime.now());
-    final imageRef = storageRef.child("fabrics/$formattedDate");
-    try {
-      await imageRef.putFile(_image!);
-      final url = await imageRef.getDownloadURL();
-      final Map<String, Map> updates = {};
-      updates['$newPostKey'] = {
-        'name': _patternName,
-        'description': _patternDescription,
-        'url': url,
-        'tags': {"tag1", "tag2"}
-      };
+    // String formattedDate = DateFormat('yyyyMMddkkmm').format(DateTime.now());
+    // final imageRef = storageRef.child("fabrics/$formattedDate");
+    // try {
+    //   await imageRef.putFile(_image!);
+    //   final url = await imageRef.getDownloadURL();
+    //   final Map<String, Map> updates = {};
+    //   updates['$newPostKey'] = {
+    //     'name': _patternName,
+    //     'description': _patternDescription,
+    //     'url': url,
+    //     'tags': {"tag1", "tag2"}
+    //   };
 
-      databaseRef.update(updates);
-    } catch (e) {
-      developer.log(e.toString());
-    }
+    //   databaseRef.update(updates);
+    // } catch (e) {
+    //   developer.log(e.toString());
+    // }
   }
 
   @override
