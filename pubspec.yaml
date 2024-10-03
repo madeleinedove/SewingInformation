@@ -43,6 +43,8 @@ dependencies:
   amplify_authenticator: ^1.0.0
   amplify_flutter: ^1.0.0
   amplify_storage_s3: ^1.0.0
+  url_launcher: ^6.3.0
+  file_picker: ^8.1.2
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +73,7 @@ flutter:
     - assets/sewingInfo.json
     - assets/fabricTemp.jpg
     - assets/loading.gif
+    - assets/cert.pem
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

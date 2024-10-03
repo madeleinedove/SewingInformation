@@ -1,11 +1,50 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:sewing_information/src/fabric/fabric.dart';
+import 'package:sewing_information/service/database_api_service.dart';
+import 'package:sewing_information/models/Fabric.dart';
+import 'package:sewing_information/service/storage_service.dart';
 //import 'package:flutter_chips_input/flutter_chips_input.dart';
 //import 'dart:developer' as developer;
 
-class FabricScreen extends StatelessWidget {
-  const FabricScreen({super.key, required this.fabrics});
-  final List fabrics;
+class FabricScreen extends StatefulWidget {
+  const FabricScreen({super.key});
+
+  @override
+  State<FabricScreen> createState() => _FabricScreenState();
+}
+
+class _FabricScreenState extends State<FabricScreen> {
+  List<Fabric> fabrics = [];
+
+  StorageService storageService = StorageService();
+
+  void _fetchFabrics() async {
+    final fabrics = await DatabaseApiService.getFabrics();
+    setState(() {
+      this.fabrics = List<Fabric>.from(fabrics);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Deteremine if this is the best place to fetch patterns or if it needs to be in build
+    _fetchFabrics();
+  }
+
+  // void _launchURL(String fabricUrl) async {
+  //   final Uri url = Uri.parse(fabricUrl);
+  //   if (!await launchUrl(url)) {
+  //     throw Exception('Could not launch $url');
+  //   }
+  // }
+
+  Future<ImageProvider> getImage(String key) async {
+    return Image.memory(
+            Uint8List.fromList(await storageService.downloadToMemory(key)))
+        .image;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +79,16 @@ class FabricScreen extends StatelessWidget {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: countRow),
           shrinkWrap: true,
-          itemBuilder: (context, index) => fabricCard(fabrics[index]),
+          itemBuilder: (context, index) => FutureBuilder(
+              future: getImage(fabrics[index].imageKey ?? ""),
+              builder: (ctx, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else {
+                  final data = snapshot.data as ImageProvider;
+                  return fabricCard(fabrics[index], data);
+                }
+              }),
           itemCount: fabrics.length),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -72,7 +120,7 @@ class FabricScreen extends StatelessWidget {
     );
   }
 
-  SizedBox fabricCard(FabricInfo fabric) {
+  SizedBox fabricCard(Fabric fabric, ImageProvider fabricImage) {
     return SizedBox(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -85,7 +133,7 @@ class FabricScreen extends StatelessWidget {
               ListTile(
                 title: Text(fabric.name),
                 subtitle: Text(
-                  fabric.description,
+                  fabric.description ?? "",
                   style: TextStyle(color: Colors.black.withOpacity(0.6)),
                 ),
               ),
@@ -93,9 +141,9 @@ class FabricScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(6.0),
-                      child: FadeInImage.assetNetwork(
-                          placeholder: 'assets/loading.gif',
-                          image: fabric.url))),
+                      child: FadeInImage(
+                          placeholder: AssetImage('assets/loading.gif'),
+                          image: fabricImage))),
             ],
           ),
         ),
@@ -104,6 +152,13 @@ class FabricScreen extends StatelessWidget {
   }
 }
 
+
+// ElevatedButton(
+//                           onPressed: () {
+//                             // _launchURL(StorageService()
+//                             //     .getDownloadUrl(fabric.url ?? "")
+//                             //     .toString());
+//                           },
 
 // ChipsInput(chipBuilder: (context, state, profile) {
 //                         return InputChip(

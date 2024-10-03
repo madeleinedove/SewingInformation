@@ -7,7 +7,7 @@ type Fabric @model {
   name: String!
   description: String
   tags: AWSJSON
-  url: AWSURL
+  imageKey: String
 }
 
 type Pattern @model {

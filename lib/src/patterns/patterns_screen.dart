@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sewing_information/models/Pattern.dart';
-import 'package:sewing_information/service/patterns_api_service.dart';
+import 'package:sewing_information/service/database_api_service.dart';
 import 'package:sewing_information/src/patterns/add_new_pattern.dart';
 //import 'dart:developer' as developer;
 
 class PatternsScreen extends StatefulWidget {
-  const PatternsScreen({super.key, required this.databaseApiService});
-  final DatabaseApiService databaseApiService;
+  const PatternsScreen({super.key});
 
   @override
   State<PatternsScreen> createState() => _PatternScreenState();

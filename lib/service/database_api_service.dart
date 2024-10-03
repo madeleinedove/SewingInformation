@@ -22,7 +22,7 @@ class DatabaseApiService {
     }
   }
 
-  Future<void> createPattern() async {
+  static Future<void> createPattern() async {
     final pattern = Pattern(
       name: 'New Pattern',
       description: 'Description',
@@ -40,6 +40,44 @@ class DatabaseApiService {
         return;
       }
       safePrint('Created pattern: ${createdPattern.name}');
+    } on ApiException catch (e) {
+      safePrint('Create failed: $e');
+    }
+  }
+
+  static Future<List<Fabric?>> getFabrics() async {
+    try {
+      final request = ModelQueries.list(Fabric.classType);
+      final response = await Amplify.API.query(request: request).response;
+      final fabrics = response.data;
+      if (fabrics != null) {
+        return fabrics.items;
+      }
+      return const [];
+    } on ApiException catch (e) {
+      safePrint('Query failed: $e');
+      return const [];
+    }
+  }
+
+  static Future<void> createFabric(
+      String name, String desc, String imageKey) async {
+    final fabric = Fabric(
+        name: name,
+        description: desc,
+        tags: "{\"tags\": [\"tag1\", \"tag2\"]}",
+        imageKey: imageKey);
+
+    try {
+      final request = ModelMutations.create(fabric);
+      final response = await Amplify.API.mutate(request: request).response;
+
+      final createFabric = response.data;
+      if (createFabric == null) {
+        safePrint('errors: ${response.errors}');
+        return;
+      }
+      safePrint('Created pattern: ${createFabric.name}');
     } on ApiException catch (e) {
       safePrint('Create failed: $e');
     }

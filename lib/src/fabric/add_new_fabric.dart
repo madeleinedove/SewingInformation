@@ -1,11 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:developer' as developer;
-
 import 'package:intl/intl.dart';
+import 'package:sewing_information/service/database_api_service.dart';
+import 'package:sewing_information/service/storage_service.dart';
 
 class AddNewFabricScreen extends StatefulWidget {
   const AddNewFabricScreen({super.key});
@@ -21,7 +20,8 @@ class _AddNewFabricScreenState extends State<AddNewFabricScreen> {
   final picker = ImagePicker();
   File? _image;
 
-  //Image Picker function to get image from gallery
+  StorageService storageService = StorageService();
+
   Future getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
@@ -31,7 +31,6 @@ class _AddNewFabricScreenState extends State<AddNewFabricScreen> {
     });
   }
 
-  //Image Picker function to get image from camera
   Future getImageFromCamera() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
     setState(() {
@@ -41,7 +40,6 @@ class _AddNewFabricScreenState extends State<AddNewFabricScreen> {
     });
   }
 
-  //Show options to get image from camera or gallery
   Future showOptions() async {
     showCupertinoModalPopup(
       context: context,
@@ -71,26 +69,11 @@ class _AddNewFabricScreenState extends State<AddNewFabricScreen> {
   }
 
   Future<void> addNewFabric() async {
-    // _formKey.currentState!.save();
-    // final newPostKey = databaseRef.push().key;
-
-    // String formattedDate = DateFormat('yyyyMMddkkmm').format(DateTime.now());
-    // final imageRef = storageRef.child("fabrics/$formattedDate");
-    // try {
-    //   await imageRef.putFile(_image!);
-    //   final url = await imageRef.getDownloadURL();
-    //   final Map<String, Map> updates = {};
-    //   updates['$newPostKey'] = {
-    //     'name': _patternName,
-    //     'description': _patternDescription,
-    //     'url': url,
-    //     'tags': {"tag1", "tag2"}
-    //   };
-
-    //   databaseRef.update(updates);
-    // } catch (e) {
-    //   developer.log(e.toString());
-    // }
+    _formKey.currentState!.save();
+    String formattedDate = DateFormat('yyyyMMddkkmm').format(DateTime.now());
+    storageService.uploadFile('public/$formattedDate', _image!.path);
+    DatabaseApiService.createFabric(
+        _patternName, _patternDescription, 'public/$formattedDate');
   }
 
   @override
@@ -144,7 +127,6 @@ class _AddNewFabricScreenState extends State<AddNewFabricScreen> {
               ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // Save the data to the database
                       Navigator.of(context).pop();
                       addNewFabric();
                     }

@@ -28,7 +28,7 @@ export 'Pattern.dart';
 
 class ModelProvider implements amplify_core.ModelProviderInterface {
   @override
-  String version = "aa41604512606fd2eeb451dd1de0083a";
+  String version = "3254b235acf17ba82bbdefbd5b2c6db6";
   @override
   List<amplify_core.ModelSchema> modelSchemas = [Fabric.schema, Pattern.schema];
   @override

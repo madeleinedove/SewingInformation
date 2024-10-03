@@ -1,0 +1,16 @@
+{
+  "resourceName": "fabricImages",
+  "policyUUID": "637bfd28",
+  "bucketName": "sewinginformation9cbf28a6332e4b45b2009155c1b26f",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

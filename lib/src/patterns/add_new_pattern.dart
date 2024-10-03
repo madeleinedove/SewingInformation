@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:sewing_information/src/patterns/pattern.dart';
 //import 'dart:developer' as developer;
+
+enum PatternManufactors {
+  burda,
+  mcCall,
+  simplicity,
+  vogue,
+  butterick,
+  kwikSew,
+  newLook,
+  other
+}
 
 class AddNewPatternScreen extends StatefulWidget {
   const AddNewPatternScreen({super.key});

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sewing_information/service/patterns_api_service.dart';
 import 'package:sewing_information/src/fabric/add_new_fabric.dart';
 import 'package:sewing_information/src/fabric/fabric_screen.dart';
 import 'package:sewing_information/src/patterns/add_new_pattern.dart';
 import 'package:sewing_information/src/patterns/patterns_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key, required this.databaseApiService});
-
-  final DatabaseApiService databaseApiService;
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +22,15 @@ class HomeScreen extends StatelessWidget {
                   trailing: const Icon(Icons.arrow_forward_ios_rounded),
                   onTap: () => {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => PatternsScreen(
-                            databaseApiService: databaseApiService)))
+                        builder: (context) => PatternsScreen()))
                   },
                 ),
                 ListTile(
                   title: const Text("Fabric"),
                   trailing: const Icon(Icons.arrow_forward_ios_rounded),
                   onTap: () => {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => FabricScreen(fabrics: [])))
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => FabricScreen()))
                   },
                 ),
               ],

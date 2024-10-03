@@ -14,6 +14,12 @@
     "categories": {
       "api": {
         "sewinginformation": {}
+      },
+      "auth": {
+        "sewinginformation61673177": {}
+      },
+      "storage": {
+        "fabricImages": {}
       }
     }
   }

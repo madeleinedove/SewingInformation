@@ -1,11 +1,12 @@
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_authenticator/amplify_authenticator.dart';
+import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'src/home_screen.dart';
 import 'package:sewing_information/models/ModelProvider.dart';
-import 'package:sewing_information/service/patterns_api_service.dart';
 import 'amplifyconfiguration.dart';
-//import 'dart:developer' as developer;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,8 @@ void main() async {
 Future<void> _configureAmplify() async {
   await Amplify.addPlugins([
     AmplifyAPI(modelProvider: ModelProvider.instance),
+    AmplifyAuthCognito(),
+    AmplifyStorageS3()
   ]);
   await Amplify.configure(amplifyconfig);
 }
@@ -29,13 +32,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return Authenticator(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        builder: Authenticator.builder(),
+        home: const MyHomePage(title: 'Sewing Information'),
       ),
-      home: const MyHomePage(title: 'Sewing Information'),
     );
   }
 }
@@ -49,8 +55,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final databaseApiService = DatabaseApiService();
-
   @override
   void initState() {
     super.initState();
@@ -63,6 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: HomeScreen(databaseApiService: databaseApiService));
+        body: HomeScreen());
   }
 }

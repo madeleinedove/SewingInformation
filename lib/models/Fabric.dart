@@ -30,7 +30,7 @@ class Fabric extends amplify_core.Model {
   final String? _name;
   final String? _description;
   final String? _tags;
-  final String? _url;
+  final String? _imageKey;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -68,8 +68,8 @@ class Fabric extends amplify_core.Model {
     return _tags;
   }
   
-  String? get url {
-    return _url;
+  String? get imageKey {
+    return _imageKey;
   }
   
   amplify_core.TemporalDateTime? get createdAt {
@@ -80,15 +80,15 @@ class Fabric extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const Fabric._internal({required this.id, required name, description, tags, url, createdAt, updatedAt}): _name = name, _description = description, _tags = tags, _url = url, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Fabric._internal({required this.id, required name, description, tags, imageKey, createdAt, updatedAt}): _name = name, _description = description, _tags = tags, _imageKey = imageKey, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Fabric({String? id, required String name, String? description, String? tags, String? url}) {
+  factory Fabric({String? id, required String name, String? description, String? tags, String? imageKey}) {
     return Fabric._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       name: name,
       description: description,
       tags: tags,
-      url: url);
+      imageKey: imageKey);
   }
   
   bool equals(Object other) {
@@ -103,7 +103,7 @@ class Fabric extends amplify_core.Model {
       _name == other._name &&
       _description == other._description &&
       _tags == other._tags &&
-      _url == other._url;
+      _imageKey == other._imageKey;
   }
   
   @override
@@ -118,7 +118,7 @@ class Fabric extends amplify_core.Model {
     buffer.write("name=" + "$_name" + ", ");
     buffer.write("description=" + "$_description" + ", ");
     buffer.write("tags=" + "$_tags" + ", ");
-    buffer.write("url=" + "$_url" + ", ");
+    buffer.write("imageKey=" + "$_imageKey" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -126,27 +126,27 @@ class Fabric extends amplify_core.Model {
     return buffer.toString();
   }
   
-  Fabric copyWith({String? name, String? description, String? tags, String? url}) {
+  Fabric copyWith({String? name, String? description, String? tags, String? imageKey}) {
     return Fabric._internal(
       id: id,
       name: name ?? this.name,
       description: description ?? this.description,
       tags: tags ?? this.tags,
-      url: url ?? this.url);
+      imageKey: imageKey ?? this.imageKey);
   }
   
   Fabric copyWithModelFieldValues({
     ModelFieldValue<String>? name,
     ModelFieldValue<String?>? description,
     ModelFieldValue<String?>? tags,
-    ModelFieldValue<String?>? url
+    ModelFieldValue<String?>? imageKey
   }) {
     return Fabric._internal(
       id: id,
       name: name == null ? this.name : name.value,
       description: description == null ? this.description : description.value,
       tags: tags == null ? this.tags : tags.value,
-      url: url == null ? this.url : url.value
+      imageKey: imageKey == null ? this.imageKey : imageKey.value
     );
   }
   
@@ -155,12 +155,12 @@ class Fabric extends amplify_core.Model {
       _name = json['name'],
       _description = json['description'],
       _tags = json['tags'],
-      _url = json['url'],
+      _imageKey = json['imageKey'],
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'name': _name, 'description': _description, 'tags': _tags, 'url': _url, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'name': _name, 'description': _description, 'tags': _tags, 'imageKey': _imageKey, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
@@ -168,7 +168,7 @@ class Fabric extends amplify_core.Model {
     'name': _name,
     'description': _description,
     'tags': _tags,
-    'url': _url,
+    'imageKey': _imageKey,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
@@ -178,7 +178,7 @@ class Fabric extends amplify_core.Model {
   static final NAME = amplify_core.QueryField(fieldName: "name");
   static final DESCRIPTION = amplify_core.QueryField(fieldName: "description");
   static final TAGS = amplify_core.QueryField(fieldName: "tags");
-  static final URL = amplify_core.QueryField(fieldName: "url");
+  static final IMAGEKEY = amplify_core.QueryField(fieldName: "imageKey");
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Fabric";
     modelSchemaDefinition.pluralName = "Fabrics";
@@ -204,7 +204,7 @@ class Fabric extends amplify_core.Model {
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: Fabric.URL,
+      key: Fabric.IMAGEKEY,
       isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
