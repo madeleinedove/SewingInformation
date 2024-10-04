@@ -61,7 +61,7 @@ class _PatternScreenState extends State<PatternsScreen> {
               context: context,
               builder: (BuildContext context) {
                 return const AddNewPatternScreen();
-              });
+              }).then((value) => _fetchPatterns());
         },
         backgroundColor: Theme.of(context).colorScheme.primary,
         child: const Icon(Icons.add),

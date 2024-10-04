@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
@@ -22,14 +23,13 @@ class DatabaseApiService {
     }
   }
 
-  static Future<void> createPattern() async {
+  static Future<void> createPattern(
+      String name, String desc, String manufactor, List<String> tags) async {
     final pattern = Pattern(
-      name: 'New Pattern',
-      description: 'Description',
-      tags: "{\"tags\": [\"tag1\", \"tag2\"]}",
-      manufactor: 'mcCall',
-    );
-
+        name: name,
+        description: desc,
+        tags: "{\"tags\": ${jsonEncode(tags)}}",
+        manufactor: manufactor);
     try {
       final request = ModelMutations.create(pattern);
       final response = await Amplify.API.mutate(request: request).response;
@@ -61,11 +61,11 @@ class DatabaseApiService {
   }
 
   static Future<void> createFabric(
-      String name, String desc, String imageKey) async {
+      String name, String desc, String imageKey, List<String> tags) async {
     final fabric = Fabric(
         name: name,
         description: desc,
-        tags: "{\"tags\": [\"tag1\", \"tag2\"]}",
+        tags: "{\"tags\": ${jsonEncode(tags)}}",
         imageKey: imageKey);
 
     try {

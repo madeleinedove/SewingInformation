@@ -5,6 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sewing_information/service/database_api_service.dart';
 import 'package:sewing_information/service/storage_service.dart';
+import 'package:textfield_tags/textfield_tags.dart';
+
+import '../utils/tag_box.dart';
 
 class AddNewFabricScreen extends StatefulWidget {
   const AddNewFabricScreen({super.key});
@@ -21,6 +24,27 @@ class _AddNewFabricScreenState extends State<AddNewFabricScreen> {
   File? _image;
 
   StorageService storageService = StorageService();
+
+  late StringTagController _stringTagController;
+  late double _distanceToField;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _distanceToField = MediaQuery.of(context).size.width;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _stringTagController = StringTagController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _stringTagController.dispose();
+  }
 
   Future getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -72,8 +96,8 @@ class _AddNewFabricScreenState extends State<AddNewFabricScreen> {
     _formKey.currentState!.save();
     String formattedDate = DateFormat('yyyyMMddkkmm').format(DateTime.now());
     storageService.uploadFile('public/$formattedDate', _image!.path);
-    DatabaseApiService.createFabric(
-        _patternName, _patternDescription, 'public/$formattedDate');
+    DatabaseApiService.createFabric(_patternName, _patternDescription,
+        'public/$formattedDate', _stringTagController.getTags!);
   }
 
   @override
@@ -115,8 +139,12 @@ class _AddNewFabricScreenState extends State<AddNewFabricScreen> {
                   _patternDescription = value!;
                 },
               ),
+              TextTag(
+                  stringTagController: _stringTagController,
+                  distanceToField: _distanceToField),
               Padding(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 24.0),
+                padding: const EdgeInsets.only(
+                    top: 16, bottom: 10, left: 8, right: 8),
                 child: ElevatedButton(
                   onPressed: () {
                     showOptions();

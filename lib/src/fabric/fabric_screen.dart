@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sewing_information/service/database_api_service.dart';
 import 'package:sewing_information/models/Fabric.dart';
 import 'package:sewing_information/service/storage_service.dart';
+import 'package:sewing_information/src/fabric/add_new_fabric.dart';
 //import 'package:flutter_chips_input/flutter_chips_input.dart';
 //import 'dart:developer' as developer;
 
@@ -49,7 +50,7 @@ class _FabricScreenState extends State<FabricScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    int widthCard = 300;
+    int widthCard = 250;
     int countRow = width ~/ widthCard;
 
     return Scaffold(
@@ -95,24 +96,8 @@ class _FabricScreenState extends State<FabricScreen> {
           showDialog(
               context: context,
               builder: (BuildContext context) {
-                return const AlertDialog(
-                  title: Text("Add new fabric"),
-                  content: Column(
-                    children: [
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: "fabric name",
-                        ),
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: "fabric description",
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              });
+                return const AddNewFabricScreen();
+              }).then((value) => _fetchFabrics());
         },
         backgroundColor: Theme.of(context).colorScheme.primary,
         child: const Icon(Icons.add),
@@ -138,12 +123,13 @@ class _FabricScreenState extends State<FabricScreen> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
-                      borderRadius: BorderRadius.circular(6.0),
+                      borderRadius: BorderRadius.circular(10.0),
                       child: FadeInImage(
                           placeholder: AssetImage('assets/loading.gif'),
-                          image: fabricImage))),
+                          image: fabricImage,
+                          height: 250))),
             ],
           ),
         ),
@@ -151,51 +137,3 @@ class _FabricScreenState extends State<FabricScreen> {
     );
   }
 }
-
-
-// ElevatedButton(
-//                           onPressed: () {
-//                             // _launchURL(StorageService()
-//                             //     .getDownloadUrl(fabric.url ?? "")
-//                             //     .toString());
-//                           },
-
-// ChipsInput(chipBuilder: (context, state, profile) {
-//                         return InputChip(
-//                           key: ObjectKey(profile),
-//                           label: Text(profile.toString()),
-//                           onDeleted: () {
-//                             state.deleteChip(profile);
-//                           },
-//                           materialTapTargetSize:
-//                               MaterialTapTargetSize.shrinkWrap,
-//                         );
-//                       }, suggestionBuilder: (context, state, profile) {
-//                         return ListTile(
-//                           title: Text(profile.toString()),
-//                           onTap: () {
-//                             state.selectSuggestion(profile);
-//                           },
-//                         );
-//                       }, findSuggestions: (String query) {
-//                         if (query.isNotEmpty) {
-//                           return [
-//                             "tag1",
-//                             "tag2",
-//                             "tag3",
-//                             "tag4",
-//                             "tag5",
-//                             "tag6",
-//                             "tag7",
-//                             "tag8",
-//                             "tag9",
-//                             "tag10"
-//                           ].where((profile) {
-//                             return profile.contains(query);
-//                           }).toList(growable: false);
-//                         } else {
-//                           return const [];
-//                         }
-//                       }, onChanged: (data) {
-//                         developer.log(data.toString());
-//                       })
